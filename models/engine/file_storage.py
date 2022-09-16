@@ -80,7 +80,5 @@ class FileStorage:
 
     def count(self, cls=None):
         """Return the number"""
-        if cls:
-            return len(self.all(cls))
-        return len(self.all())
+        return len(self.all(cls))
 
