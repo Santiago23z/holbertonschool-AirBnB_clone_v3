@@ -100,4 +100,3 @@ class DBStorage:
     def count(self, cls=None):
         """Return the number"""
         return len(self.all(cls))
-
