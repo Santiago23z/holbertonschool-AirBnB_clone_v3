@@ -2,7 +2,7 @@
 """
 Contains the FileStorage class
 """
-import models
+
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -55,7 +55,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except BaseException:
             pass
 
     def delete(self, obj=None):
@@ -70,8 +70,8 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """A method to retrieve one object"""
-        if cls and id:
+        """Retrieve an obj based on the class and id."""
+        if cls:
             for obj in self.all(cls).values():
                 if obj.id == id:
                     return obj
