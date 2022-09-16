@@ -3,11 +3,8 @@
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
-<<<<<<< HEAD
 from os import getenv
 from flask_cors import CORS
-=======
->>>>>>> ad5971e55eda90f364fd835e78d60993364d7139
 
 
 app = Flask(__name__)
