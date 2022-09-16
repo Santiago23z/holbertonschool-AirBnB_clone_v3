@@ -88,3 +88,16 @@ class DBStorage:
         if cls:
             return len(self.all(cls))
         return len(self.all())
+
+    def get(self, cls, id):
+        """A method to retrieve one object"""
+        if cls and id:
+            key = cls + '.' + id
+            return models.storage.all(cls).get(key)
+        return None
+
+    def count(self, cls=None):
+        """A method to count the number of objects in storage"""
+        if cls:
+            return len(models.storage.all(cls))
+        return len(models.storage.all())
