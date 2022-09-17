@@ -36,6 +36,6 @@ def stats():
 
 
 @app_views.app_errorhandler(404) 
-    def nop(error):
-       '''404'''
-        return jsonify({'error': 'Not found'}), 404
+def nop(error):
+    '''404'''
+    return jsonify({'error': 'Not found'}), 404
