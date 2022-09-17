@@ -2,12 +2,14 @@
 from flask import jsonify
 from api.v1.views import app_views
 
+
 @app_views.route('/status', strict_slashes=False)
 def status():
     """
     status of the API
     """
     return jsonify({'status': 'OK'})
+
 
 @app_views.route('/stats', strict_slashes=False)
 def stats():
@@ -35,7 +37,7 @@ def stats():
     return jsonify(result)
 
 
-@app_views.app_errorhandler(404) 
+@app_views.app_errorhandler(404)
 def nop(error):
     '''404'''
     return jsonify({'error': 'Not found'}), 404
