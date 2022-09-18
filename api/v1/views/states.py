@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Update Amenity"""
 
 from flask import abort, request, jsonify, make_response
 from api.v1.views import app_views
