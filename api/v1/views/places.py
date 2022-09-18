@@ -68,13 +68,19 @@ def place_post(city_id):
 @app_views.route("/places/<string:place_id>", methods=['PUT'],
                  strict_slashes=False)
 def place_put(place_id):
-    """Method that puts a place"""
+    """Method that updates a place"""
     place = storage.get(Place, place_id)
-    data = request.get_json()
     if not place:
         abort(404)
+    data = request.get_json()
     if not data:
         abort(400, description="Not a JSON")
+    for key, value in data.items():
+        if key not in ['id', 'user_id', 'city_id', 'created_at',
+                       'updated_at']:
+            setattr(place, key, value)
+    place.save()
+    return make_response(jsonify(place.to_dict()), 200)
 
     ignore = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
 
