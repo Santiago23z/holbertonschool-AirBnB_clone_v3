@@ -33,37 +33,33 @@ def delete_state(state_id):
         abort(404)
     storage.delete(state)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def state_post():
-    """Method that creates a state"""
-    data = request.get_json()
-    if not data:
-        abort(400, description="Not a JSON")
-    if "name" not in data:
-        abort(400, description="Missing name")
-    instance = State(**data)
-    instance.save()
-    return make_response(jsonify(instance.to_dict()), 201)
+    """Method for post state"""
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if 'name' not in request.get_json():
+        return make_response(jsonify({'error': 'Missing name'}), 400)
+    state = State(**request.get_json())
+    state.save()
+    return make_response(jsonify(state.to_dict()), 201)
 
 
 @app_views.route("/states/<string:state_id>", methods=['PUT'],
                  strict_slashes=False)
 def state_put(state_id):
-    """Method that puts a state"""
-    state = storage.get(State, state_id)
+    """Method that updates a state"""
     data = request.get_json()
-    if not state:
-        abort(404)
     if not data:
         abort(400, description="Not a JSON")
-
-    ignore = ['id', 'created_at', 'updated_at']
-
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
     for key, value in data.items():
-        if key not in ignore:
+        if key not in ["id", "created_at", "updated_at"]:
             setattr(state, key, value)
-        storage.save()
-        return make_response(jsonify(state.to_dict()), 200)
+    state.save()
+    return jsonify(state.to_dict()), 200
