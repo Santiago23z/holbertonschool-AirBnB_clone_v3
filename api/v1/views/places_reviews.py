@@ -46,27 +46,21 @@ def review_post(place_id):
     """Method that creates a review"""
     place = storage.get(Place, place_id)
     data = request.get_json()
-    user = storage.get(User, data['user_id'])
-
     if not place:
         abort(404)
-
     if not data:
         abort(400, description="Not a JSON")
-
     if "user_id" not in data:
         abort(400, description="Missing user_id")
-
+    user = storage.get(User, data['user_id'])
     if not user:
         abort(404)
-
     if "text" not in data:
         abort(400, description="Missing text")
-
-    data["place_id"] = place_id
-    instance = Review(**data)
-    instance.save()
-    return make_response(jsonify(instance.to_dict()), 201)
+    data['place_id'] = place_id
+    review = Review(**data)
+    review.save()
+    return make_response(jsonify(review.to_dict()), 201)
 
 
 @app_views.route("reviews/<string:review_id>", methods=['PUT'],

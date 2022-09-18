@@ -81,11 +81,3 @@ def place_put(place_id):
             setattr(place, key, value)
     place.save()
     return make_response(jsonify(place.to_dict()), 200)
-
-    ignore = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
-
-    for key, value in data.items():
-        if key not in ignore:
-            setattr(place, key, value)
-        storage.save()
-        return make_response(jsonify(place.to_dict()), 200)
