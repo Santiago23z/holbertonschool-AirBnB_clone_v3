@@ -42,3 +42,4 @@ def stats():
 def nop(error):
     '''404'''
     return jsonify({'error': 'Not found'}), 404
+
